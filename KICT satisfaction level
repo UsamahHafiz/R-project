@@ -1,0 +1,2 @@
+cor.test(KICT.Satisfaction.level$partA, KICT.Satisfaction.level$partB, method=c("pearson", "kendall", "spearman"))
+cor.test(KICT.Satisfaction.level$partB, KICT.Satisfaction.level$partC, method=c("pearson", "kendall", "spearman"))
