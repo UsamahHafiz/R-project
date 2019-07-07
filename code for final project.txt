@@ -1,0 +1,413 @@
+>   KICT_Satisfaction_level <- read.csv("C:/Users/Usamah-TUF/Google Drive/MASTER/Tool for Data Analytic/KICT Satisfaction level.csv")
+>   View(KICT_Satisfaction_level)
+>   library("ggplot2")
+>   install.packages("ggplot2")
+>   require(ggplot2)
+>   install.packages("ggplot2")
+>   install.packages("ggplot2",dependencies=TRUE)
+>   library(ggplot2)
+>   install.packages("ggExtra",dependencies=TRUE)//installing the package for plot graph
+>   library(ggExtra)
+>   install.packages(“RColorBrewer”)
+>library(RColorBrewer)
+>n <- 7
+>mycolors <- brewer.pal(n, "Set1")
+>barplot(rep(1,n), col=mycolors) //installing R color brewer to coloring graph
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+>KICT_Satisfaction_level[,1]<- NULL //removing timestamp column as it is not useful for analysis// figure1
+//seperation KICT satisfaction level table into partA, partB and partC is important for the analysis part by comparing 
+each mean of the part into the mean of KICT satisfaction level//
+> partA<-KICT_Satisfaction_level %>% select(5:9)
+> View(partA)//categorise facilities attribute into partA//figure2
+>partB<-KICT_Satisfaction_level %>% select(10:12)//figure3
+> View(partB)//categorise course content attribute into partB
+> partC<-KICT_Satisfaction_level %>% select(13:15)//figure4
+> View(partC)//categorise administrative attribute into partC
+> Facilitiesmean<- rowMeans(partA,na.rm = FALSE,dims=1)
+> Facilitiesmean
+ [1] 4.0 3.6 3.6 3.0 4.0 2.6 4.2 3.8 4.0 4.2 3.8 3.4 4.0 4.0 4.2
+[16] 4.8 3.8 3.8 4.2 4.4 4.6 4.0 5.0 4.8 4.0 4.6 4.6 3.0 3.8 4.0
+> View(Facilitiesmean)//mean of partA
+> Coursemean<- rowMeans(partB,na.rm = FALSE,dims=1)
+> Coursemean//mean of partB
+ [1] 2.666667 2.000000 3.000000 2.000000 4.000000 4.000000
+ [7] 3.000000 4.000000 3.666667 5.000000 4.000000 2.666667
+[13] 3.333333 4.333333 5.000000 5.000000 3.666667 3.333333
+[19] 4.333333 4.333333 4.333333 4.000000 5.000000 4.333333
+[25] 3.666667 4.333333 4.666667 3.000000 3.666667 4.333333
+> Adminmean<- rowMeans(partC,na.rm = FALSE,dims=1)
+> Adminmean//mean of partC
+ [1] 3.333333 2.000000 3.666667 1.000000 4.000000 3.000000
+ [7] 3.000000 4.000000 4.000000 4.000000 4.333333 2.000000
+[13] 3.333333 2.666667 5.000000 4.666667 3.666667 3.000000
+[19] 4.000000 4.666667 4.000000 3.666667 5.000000 4.666667
+[25] 4.000000 4.666667 5.000000 2.333333 4.000000 3.666667
+> KICT_Satisfaction_level$Facilitiesmean<- rowMeans(partA,na.rm = FALSE,dims=1)
+> View(KICT_Satisfaction_level)//inserting facilitiesmean into KICT satisfaction level table
+> KICT_Satisfaction_level$ Coursemean<- rowMeans(partB,na.rm = FALSE,dims=1)
+//inserting coursemean into KICT satisfaction level table
+> KICT_Satisfaction_level$Adminmean<- rowMeans(partC,na.rm = FALSE,dims=1)
+//inserting adminmean into KICT satisfaction level table//figure 5
+> View(KICT_Satisfaction_level)
+> studentsmean<-KICT_Satisfaction_level %>% select(5:15)
+> studentsmean
+> View(studentsmean)//calculating the means of each of the column inside the KICT satisfaction level table
+> rowMeans(studentsmean,na.rm = FALSE,dims=1)
+ [1] 3.454545 2.727273 3.454545 2.181818 4.000000 3.090909
+ [7] 3.545455 3.909091 3.909091 4.363636 4.000000 2.818182
+[13] 3.636364 3.727273 4.636364 4.818182 3.727273 3.454545
+[19] 4.181818 4.454545 4.363636 3.909091 5.000000 4.636364
+[25] 3.909091 4.545455 4.727273 2.818182 3.818182 4.000000
+// the total mean of each row of the column in KICT satisfaction level table
+> KICT_Satisfaction_level$StudentSatisfactionMean <- rowMeans(studentsmean,na.rm = FALSE,dims=1)
+> View(KICT_Satisfaction_level)//inserting studentsatisfactionmean into KICT satisfaction level table//figure 7
+
+/////////////////////////////visualization part//////////////////////////////////////////
+
+> install.packages("ggpubr")
+> install.packages("ggplot2")
+> library(ggpubr)
+> library(ggplot2)
+> table(KICT.Satisfaction.level$Level.of.study)
+> pie(table(KICT.Satisfaction.level$Level.of.study))
+> pie(table(KICT.Satisfaction.level$Level.of.study), main = "Level of Study")
+> pie(table(KICT.Satisfaction.level$Level.of.study), main = "Level of Study", col = c("Red", "Blue"))
+> box()//figure 8
+> names(table(KICT.Satisfaction.level$Level.of.study))
+[1] "Postgraduate Student"  "Undergraduate Student"
+> table(KICT.Satisfaction.level$Level.of.study)/30
+
+ Postgraduate Student Undergraduate Student 
+                  0.3                   0.7 
+> (table(KICT.Satisfaction.level$Level.of.study)/30)*100
+
+ Postgraduate Student Undergraduate Student 
+                   30                    70 
+> lbs <- paste(names(table(KICT.Satisfaction.level$Level.of.study)),(table(KICT.Satisfaction.level$Level.of.study)/30)*100, "%")
+> pie(table(KICT.Satisfaction.level$Level.of.study), labels = lbs, col = c("Red","Blue"), main= "Level of Study")
+> box()//pie chart for level of study
+> table(KICT.Satisfaction.level$Country)
+
+   Kuantan   Malaysia   MALAYSIA  Malaysian Terengganu 
+         1         25          2          1          1 
+> plot(table(KICT.Satisfaction.level$Country))
+> plot(KICT.Satisfaction.level$Country)
+> plot((KICT.Satisfaction.level$Country), col = c("Red","Blue","Yellow", "Green","Orange"), main="Country")//bar chart for country//figure 9
+> plot((KICT.Satisfaction.level$Gender), col = rainbow(2), main="Gender")//bar chart for Gender//figure 10
+> plot(KICT.Satisfaction.level$Age)
+> plot((KICT.Satisfaction.level$Age), col = rainbow(12), main="Gender")// plot graph for age
+> install.packages("plotly")
+> library(plotly)
+> install.packages("ggplot2")
+> library(ggplot2)
+
+
+//////////////////////////////////////////////analysis part////////////////////////////////////
+//////standard deviation//////
+> sd(KICT.Satisfaction.level$Age)
+[1] 7.187873
+> sd(KICT.Satisfaction.level$WIFI.condition)
+[1] 0.6914918
+> sd(KICT.Satisfaction.level$Classroom.Condition)
+[1] 0.7183954
+> sd(KICT.Satisfaction.level$Toilet.Condition)
+[1] 0.868345
+> sd(KICT.Satisfaction.level$Library.condition..resources.and.collection)
+[1] 0.711159
+> sd(KICT.Satisfaction.level$Work.space.condition)
+[1] 0.7878386
+> sd(KICT.Satisfaction.level$Subject.has.enough.hands.on)
+[1] 0.8172002
+> sd(KICT.Satisfaction.level$Course.content.is.up.to.date)
+[1] 0.9498941
+> sd(KICT.Satisfaction.level$Course.content.is.industry.relevant)
+[1] 1.074255
+> sd(KICT.Satisfaction.level$Administrator.is.responsive)
+[1] 1.212957
+> sd(KICT.Satisfaction.level$Support.staff.is.timely)
+[1] 1.154701
+> sd(KICT.Satisfaction.level$Academic.staff.has.established.good.support.with.students)
+[1] 0.8502873
+
+////////mean///////////
+> mean(KICT.Satisfaction.level$Age)
+[1] 25.7
+> mean(KICT.Satisfaction.level$WIFI.condition)
+[1] 3.733333
+> mean(KICT.Satisfaction.level$Classroom.Condition)
+[1] 3.966667
+> mean(KICT.Satisfaction.level$Toilet.Condition)
+[1] 3.933333
+> mean(KICT.Satisfaction.level$Library.condition..resources.and.collection)
+[1] 4.333333
+> mean(KICT.Satisfaction.level$Work.space.condition)
+[1] 4
+> mean(KICT.Satisfaction.level$Subject.has.enough.hands.on)
+[1] 3.766667
+> mean(KICT.Satisfaction.level$Course.content.is.up.to.date)
+[1] 3.833333
+> mean(KICT.Satisfaction.level$Course.content.is.industry.relevant)
+[1] 3.866667
+> mean(KICT.Satisfaction.level$Administrator.is.responsive)
+[1] 3.666667
+> mean(KICT.Satisfaction.level$Support.staff.is.timely)
+[1] 3.333333
+> mean(KICT.Satisfaction.level$Academic.staff.has.established.good.support.with.students)
+[1] 4.033333
+
+///////median//////////
+> median(KICT.Satisfaction.level$Age)
+[1] 23.5
+> median(KICT.Satisfaction.level$WIFI.condition)
+[1] 4
+> median(KICT.Satisfaction.level$Classroom.Condition)
+[1] 4
+> median((KICT.Satisfaction.level$Toilet.Condition))
+[1] 4
+> median(KICT.Satisfaction.level$Library.condition..resources.and.collection)
+[1] 4
+> median(KICT.Satisfaction.level$Work.space.condition)
+[1] 4
+> median(KICT.Satisfaction.level$Subject.has.enough.hands.on)
+[1] 4
+> median(KICT.Satisfaction.level$Course.content.is.up.to.date)
+[1] 4
+> median(KICT.Satisfaction.level$Course.content.is.industry.relevant)
+[1] 4
+> median(KICT.Satisfaction.level$Administrator.is.responsive)
+[1] 4
+> median(KICT.Satisfaction.level$Support.staff.is.timely)
+[1] 3.5
+> median(KICT.Satisfaction.level$Academic.staff.has.established.good.support.with.students)
+[1] 4
+
+>alpha(studentsmean) //cronbach's alpha analysis
+Reliability analysis   
+Call: alpha(x = studentsmean)
+
+  raw_alpha std.alpha G6(smc) average_r S/N   ase mean   sd median_r
+      0.92      0.91    0.94      0.49  11 0.019  3.9 0.68     0.51
+
+ lower alpha upper     95% confidence boundaries
+0.88 0.92 0.96 
+
+ Reliability if an item is dropped:
+                                                          raw_alpha std.alpha G6(smc) average_r  S/N alpha se var.r med.r
+WIFI.condition                                                 0.93      0.93    0.95      0.56 12.5    0.018 0.019  0.54
+Classroom.Condition                                            0.91      0.91    0.93      0.49  9.8    0.021 0.041  0.51
+Toilet.Condition                                               0.91      0.90    0.93      0.48  9.4    0.021 0.040  0.51
+Library.condition..resources.and.collection                    0.92      0.91    0.94      0.51 10.3    0.020 0.040  0.53
+Work.space.condition                                           0.91      0.91    0.94      0.49  9.5    0.021 0.044  0.52
+Subject.has.enough.hands.on                                    0.91      0.91    0.94      0.50 10.0    0.020 0.038  0.51
+Course.content.is.up.to.date                                   0.91      0.90    0.93      0.48  9.2    0.022 0.035  0.51
+Course.content.is.industry.relevant                            0.90      0.90    0.93      0.47  8.9    0.023 0.034  0.50
+Administrator.is.responsive                                    0.90      0.90    0.92      0.47  8.7    0.024 0.035  0.50
+Support.staff.is.timely                                        0.90      0.90    0.93      0.46  8.5    0.025 0.034  0.49
+Academic.staff.has.established.good.support.with.students      0.91      0.90    0.93      0.48  9.4    0.021 0.042  0.51
+
+ Item statistics 
+                                                           n raw.r std.r r.cor r.drop mean   sd
+WIFI.condition                                            30  0.33  0.37  0.28   0.24  3.7 0.69
+Classroom.Condition                                       30  0.69  0.71  0.68   0.64  4.0 0.72
+Toilet.Condition                                          30  0.76  0.77  0.75   0.71  3.9 0.87
+Library.condition..resources.and.collection               30  0.61  0.63  0.60   0.54  4.3 0.71
+Work.space.condition                                      30  0.72  0.75  0.71   0.67  4.0 0.79
+Subject.has.enough.hands.on                               30  0.68  0.68  0.64   0.62  3.8 0.82
+Course.content.is.up.to.date                              30  0.81  0.79  0.79   0.76  3.8 0.95
+Course.content.is.industry.relevant                       30  0.86  0.84  0.84   0.81  3.9 1.07
+Administrator.is.responsive                               30  0.89  0.86  0.87   0.84  3.7 1.21
+Support.staff.is.timely                                   30  0.91  0.90  0.91   0.88  3.3 1.15
+Academic.staff.has.established.good.support.with.students 30  0.77  0.77  0.75   0.71  4.0 0.85
+
+Non missing response frequency for each item
+                                                             1    2    3    4    5 miss
+WIFI.condition                                            0.00 0.03 0.30 0.57 0.10    0
+Classroom.Condition                                       0.00 0.00 0.27 0.50 0.23    0
+Toilet.Condition                                          0.00 0.07 0.20 0.47 0.27    0
+Library.condition..resources.and.collection               0.00 0.00 0.13 0.40 0.47    0
+Work.space.condition                                      0.00 0.03 0.20 0.50 0.27    0
+Subject.has.enough.hands.on                               0.00 0.07 0.27 0.50 0.17    0
+Course.content.is.up.to.date                              0.00 0.13 0.13 0.50 0.23    0
+Course.content.is.industry.relevant                       0.03 0.07 0.23 0.33 0.33    0
+Administrator.is.responsive                               0.10 0.07 0.13 0.47 0.23    0
+Support.staff.is.timely                                   0.10 0.10 0.30 0.37 0.13    0
+Academic.staff.has.established.good.support.with.students 0.03 0.00 0.13 0.57 0.27    0
+
+//ANOVA method in R, these are the result for studentsatisfactionmean and gender.//
+
+>aov(KICT.Satisfaction.level$StudentSatisfactionMean ~ KICT.Satisfaction.level$Gender)
+Call:
+   aov(formula = KICT.Satisfaction.level$StudentSatisfactionMean ~ 
+    KICT.Satisfaction.level$Gender)
+
+Terms:
+                KICT.Satisfaction.level$Gender Residuals
+Sum of Squares                        2.183707 11.035026
+Deg. of Freedom                              1        28
+
+Residual standard error: 0.6277803
+Estimated effects may be unbalanced
+
+ /////////This is the ANOVA summary result for studentsatisfactionmean and gender////////
+>ANOVAgender <-aov(KICT.Satisfaction.level$StudentSatisfactionMean ~ KICT.Satisfaction.level$Gender)
+> summary(ANOVAgender)
+                               Df Sum Sq Mean Sq F value Pr(>F)  
+KICT.Satisfaction.level$Gender  1  2.184  2.1837   5.541 0.0258 *
+Residuals                      28 11.035  0.3941                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+////////// This is the ANOVA result for studentsatisfactionmean and level of study/////////
+>aov(KICT.Satisfaction.level$StudentSatisfactionMean ~ KICT.Satisfaction.level$Level.of.study)
+Call:
+   aov(formula = KICT.Satisfaction.level$StudentSatisfactionMean ~ 
+    KICT.Satisfaction.level$Level.of.study)
+
+Terms:
+                KICT.Satisfaction.level$Level.of.study Residuals
+Sum of Squares                                3.175443 10.043290
+Deg. of Freedom                                      1        28
+
+Residual standard error: 0.5989064
+Estimated effects may be unbalanced
+
+///////////////This is the ANOVA summary  result for studentsatisfactionmean and level of study//////////
+>ANOVAlevelstudy <- aov(KICT.Satisfaction.level$StudentSatisfactionMean ~ KICT.Satisfaction.level$Level.of.study)
+> summary(ANOVAlevelstudy)
+                                       Df Sum Sq Mean Sq F value  Pr(>F)   
+KICT.Satisfaction.level$Level.of.study  1  3.175   3.175   8.853 0.00597 **
+Residuals                              28 10.043   0.359                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+//////corelation test///////////figure 12
+///////cor test that has been compared with facilitiesmean and coursemean/////////
+
+>cor.test(KICT.Satisfaction.level$partA, KICT.Satisfaction.level$partB, method=c("pearson", "kendall", "spearman"))
+
+	Pearson's product-moment correlation
+data:  KICT.Satisfaction.level$partA and KICT.Satisfaction.level$partB
+t = 4.5068, df = 28, p-value = 0.0001067
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.3759514 0.8176635
+sample estimates:
+      cor 
+0.6483991 
+
+///////cor test that has been compared with course and admin////////////
+
+>cor.test(KICT.Satisfaction.level$partB, KICT.Satisfaction.level$partC, method=c("pearson", "kendall", "spearman"))
+
+	Pearson's product-moment correlation
+
+data:  KICT.Satisfaction.level$partB and KICT.Satisfaction.level$partC
+t = 7.7491, df = 28, p-value = 1.928e-08
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.6627396 0.9141270
+sample estimates:
+      cor 
+0.8258298 
+
+//////////the cor test that has been compared with facilities and admin///////////////
+
+>cor.test(KICT.Satisfaction.level$partA, KICT.Satisfaction.level$partC, method=c("pearson", "kendall", "spearman"))
+
+	Pearson's product-moment correlation
+
+data:  KICT.Satisfaction.level$partA and KICT.Satisfaction.level$partC
+t = 6.1904, df = 28, p-value = 1.098e-06
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.5506784 0.8795429
+sample estimates:
+      cor 
+0.7601413 
+
+//////////strong correlation between the main determinants and the students satisfaction 
+by correlating the mean of the determinants and the students satisfaction mean.////////figure 11
+>cor.test(KICT.Satisfaction.level$Facilitiesmean, KICT.Satisfaction.level$StudentSatisfactionMean, method=c("pearson", "kendall", "spearman"))
+
+	Pearson's product-moment correlation
+
+data:  KICT.Satisfaction.level$Facilitiesmean and KICT.Satisfaction.level$StudentSatisfactionMean
+t = 9.9646, df = 28, p-value = 1.041e-10
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.7669669 0.9433139
+sample estimates:
+      cor 
+0.8831962 
+
+>cor.test(KICT.Satisfaction.level$Coursemean, KICT.Satisfaction.level$StudentSatisfactionMean, method=c("pearson", "kendall", "spearman"))
+
+	Pearson's product-moment correlation
+
+data:  KICT.Satisfaction.level$Coursemean and KICT.Satisfaction.level$StudentSatisfactionMean
+t = 10.878, df = 28, p-value = 1.456e-11
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.7972658 0.9513159
+sample estimates:
+      cor 
+0.8992447 
+
+>cor.test(KICT.Satisfaction.level$Adminmean, KICT.Satisfaction.level$StudentSatisfactionMean, method=c("pearson", "kendall", "spearman"))
+
+	Pearson's product-moment correlation
+
+data:  KICT.Satisfaction.level$Adminmean and KICT.Satisfaction.level$StudentSatisfactionMean
+t = 16.111, df = 28, p-value = 1.079e-15
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.8967346 0.9762029
+sample estimates:
+     cor 
+0.950069 
+
+///////////T test for facilities and student satisfaction///////////////
+>t.test(KICT.Satisfaction.level$Facilitiesmean,KICT.Satisfaction.level$StudentSatisfactionMean)
+
+	Welch Two Sample t-test
+
+data:  KICT.Satisfaction.level$Facilitiesmean and KICT.Satisfaction.level$StudentSatisfactionMean
+t = 0.83968, df = 55.41, p-value = 0.031308564
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.1839956  0.4494502
+sample estimates:
+mean of x mean of y 
+ 3.993333  3.860606 
+
+///////////T test for Course content structure and student satisfaction//////////// 
+> t.test(KICT.Satisfaction.level$Coursemean,KICT.Satisfaction.level$StudentSatisfactionMean)
+
+	Welch Two Sample t-test
+
+data:  KICT.Satisfaction.level$Coursemean and KICT.Satisfaction.level$StudentSatisfactionMean
+t = -0.19595, df = 55.594, p-value = 0.576643876
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.4308459  0.3540782
+sample estimates:
+mean of x mean of y 
+ 3.822222  3.860606 
+
+//////////T test for Teaching and admin staff and support and student satisfaction////////// 
+
+> t.test(KICT.Satisfaction.level$Adminmean,KICT.Satisfaction.level$StudentSatisfactionMean)
+
+	Welch Two Sample t-test
+
+data:  KICT.Satisfaction.level$Adminmean and KICT.Satisfaction.level$StudentSatisfactionMean
+t = -0.84341, df = 51.563, p-value = 0.017129251
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.6179025  0.2522459
+sample estimates:
+mean of x mean of y 
+ 3.677778  3.860606 
+
